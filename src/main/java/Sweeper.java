@@ -1,14 +1,20 @@
 import javax.swing.*;
+
 import java.awt.*;
+import java.lang.reflect.GenericArrayType;
+
 
 public class Sweeper extends JFrame {
-
+    private Game game;
     private JPanel panel;
-    private final int COLS = 15;
-    private final int ROWS = 1;
+    private final int COLS = 9;
+    private final int ROWS = 9;
     private final int imageSize = 50;
 
     public Sweeper() {
+        game = new Game(COLS, ROWS);
+        game.start();
+        setImages();
         initPanel();
         initFrame();
 
@@ -20,11 +26,20 @@ public class Sweeper extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(getImage("bomb"), 0, 0, this);
+                for (Coordinates coordinates : Ranges.getAllCoordinates()
+                ) {
+
+
+                    g.drawImage((Image) game.getBox(coordinates).image,
+                            coordinates.getX() * imageSize, coordinates.getY() * imageSize, this)
+                    ;
+                }
             }
         };
+
         panel.setPreferredSize(new Dimension(
-                COLS * imageSize, ROWS * imageSize));
+                Ranges.getSize().getX() * imageSize,
+                Ranges.getSize().getY() * imageSize));
         add(panel);
 
     }
@@ -37,7 +52,14 @@ public class Sweeper extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+        setIconImage(getImage("icon"));
 
+    }
+
+    private void setImages() {
+        for (Box box : Box.values()) {
+            box.image = getImage(box.name());
+        }
     }
 
     private Image getImage(String name) {
