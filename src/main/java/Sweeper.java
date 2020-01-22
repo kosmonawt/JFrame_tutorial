@@ -1,23 +1,35 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.lang.reflect.GenericArrayType;
 
 
 public class Sweeper extends JFrame {
     private Game game;
     private JPanel panel;
+    private JLabel label;
     private final int COLS = 9;
     private final int ROWS = 9;
     private final int imageSize = 50;
+    private final int bombs = 10;
 
     public Sweeper() {
-        game = new Game(COLS, ROWS);
+        game = new Game(COLS, ROWS, bombs);
         game.start();
         setImages();
+        initLabel();
         initPanel();
         initFrame();
 
+    }
+
+    private void initLabel() {
+        label = new JLabel("Welcome");
+
+        add(label, BorderLayout.SOUTH);
     }
 
     private void initPanel() {
@@ -28,14 +40,32 @@ public class Sweeper extends JFrame {
                 super.paintComponent(g);
                 for (Coordinates coordinates : Ranges.getAllCoordinates()
                 ) {
-
-
                     g.drawImage((Image) game.getBox(coordinates).image,
-                            coordinates.getX() * imageSize, coordinates.getY() * imageSize, this)
-                    ;
+                            coordinates.getX() * imageSize, coordinates.getY() * imageSize, this);
                 }
             }
         };
+
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() / imageSize;
+                int y = e.getY() / imageSize;
+                Coordinates coordinates = new Coordinates(x, y);
+
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    game.leftButtonPressed(coordinates);
+                }
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    game.rightButtonPressed(coordinates);
+                }
+                if (e.getButton() == MouseEvent.BUTTON2) {
+                    game.start();
+                }
+                panel.repaint();
+            }
+        });
 
         panel.setPreferredSize(new Dimension(
                 Ranges.getSize().getX() * imageSize,
@@ -46,14 +76,13 @@ public class Sweeper extends JFrame {
 
     private void initFrame() {
 
-        pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sweeper");
-        setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
         setIconImage(getImage("icon"));
-
+        pack();
+        setLocationRelativeTo(null);
     }
 
     private void setImages() {
