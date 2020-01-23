@@ -1,5 +1,8 @@
+import lombok.Getter;
+
 class Bomb {
     private Matrix bombMap;
+    @Getter
     private int totalBomb;
 
     Bomb(int totalBomb) {
@@ -49,5 +52,6 @@ class Bomb {
         }
 
     }
+
 
 }

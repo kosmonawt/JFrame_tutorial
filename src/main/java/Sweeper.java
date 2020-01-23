@@ -63,6 +63,7 @@ public class Sweeper extends JFrame {
                 if (e.getButton() == MouseEvent.BUTTON2) {
                     game.start();
                 }
+                label.setText(getMessage());
                 panel.repaint();
             }
         });
@@ -72,6 +73,20 @@ public class Sweeper extends JFrame {
                 Ranges.getSize().getY() * imageSize));
         add(panel);
 
+    }
+
+    private String getMessage() {
+
+        switch (game.getGameState()) {
+            case PLAYED:
+                return "Think twice before move ! ";
+            case BOMBED:
+                return "Looser !";
+            case WINNER:
+                return "Congratulation";
+            default:
+                return "Welcome";
+        }
     }
 
     private void initFrame() {
