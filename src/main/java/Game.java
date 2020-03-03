@@ -39,7 +39,7 @@ public class Game {
             case OPENED:
                 setOpenBoxAroundNumber(coordinates);
                 return;
-            case FLAGED:
+            case FLAGGED:
                 return;
             case CLOSED:
                 switch (bomb.get(coordinates)) {

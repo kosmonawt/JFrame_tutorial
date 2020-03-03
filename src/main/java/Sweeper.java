@@ -1,23 +1,23 @@
+import lombok.Setter;
+
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.lang.reflect.GenericArrayType;
 
 
 public class Sweeper extends JFrame {
     private Game game;
     private JPanel panel;
     private JLabel label;
-    private final int COLS = 9;
-    private final int ROWS = 9;
+    private int COLS = 9;
+    private int ROWS = 9;
     private final int imageSize = 50;
-    private final int bombs = 10;
+    private int bombs = 14;
 
-    public Sweeper() {
-        game = new Game(COLS, ROWS, bombs);
+    public Sweeper(int cols, int rows, int bombs) {
+        game = new Game(cols, rows, bombs);
         game.start();
         setImages();
         initLabel();

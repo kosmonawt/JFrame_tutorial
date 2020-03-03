@@ -1,6 +1,4 @@
 import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,12 +21,10 @@ public class Ranges {
         }
     }
 
-
     static boolean inRange(Coordinates coordinates) {
 
         return coordinates.getX() >= 0 && coordinates.getX() < size.getX() &&
                 coordinates.getY() >= 0 && coordinates.getY() < size.getY();
-
     }
 
     static Coordinates getRandomCoordinates() {
@@ -46,9 +42,7 @@ public class Ranges {
                         list.add(around);
                     }
                 }
-
             }
-
         }
         return list;
     }

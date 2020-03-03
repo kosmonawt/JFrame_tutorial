@@ -24,7 +24,7 @@ class Bomb {
     }
 
     private void fixBombs() {
-        int maxBobms = Ranges.getSize().getX() * Ranges.getSize().getY() / 2;
+        int maxBobms = Ranges.getSize().getX() * Ranges.getSize().getY() / 3;
         if (totalBomb > maxBobms) {
             totalBomb = maxBobms;
         }
